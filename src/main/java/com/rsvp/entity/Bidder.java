@@ -17,7 +17,7 @@ public class Bidder {
 	private String bidderEmail;
 	private String bidderPassword;
 	private String bidderFullName;
-	private int bidderContact;
+	private String bidderContact;
 	
 	@OneToOne(mappedBy = "bidderDetails",cascade = CascadeType.ALL)
 	DetailsBidder detailsBidder;
@@ -54,11 +54,11 @@ public class Bidder {
 		this.bidderFullName = bidderFullName;
 	}
 
-	public int getBidderContact() {
+	public String getBidderContact() {
 		return bidderContact;
 	}
 
-	public void setBidderContact(int bidderContact) {
+	public void setBidderContact(String bidderContact) {
 		this.bidderContact = bidderContact;
 	}
 

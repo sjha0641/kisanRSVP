@@ -17,7 +17,7 @@ public class Farmer {
 	private String farmerEmail;
 	private String farmerPassword;
 	private String farmerFullName;
-	private int farmerContact;
+	private String farmerContact;
 	
 	@OneToOne(mappedBy = "farmerDetails",cascade = CascadeType.ALL)
 	DetailsFarmer detailsFarmer;
@@ -54,11 +54,11 @@ public class Farmer {
 		this.farmerFullName = farmerFullName;
 	}
 
-	public int getFarmerContact() {
+	public String getFarmerContact() {
 		return farmerContact;
 	}
 
-	public void setFarmerContact(int farmerContact) {
+	public void setFarmerContact(String farmerContact) {
 		this.farmerContact = farmerContact;
 	}
 

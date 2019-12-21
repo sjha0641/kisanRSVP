@@ -1,5 +1,7 @@
 package com.rsvp.repository;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -16,28 +18,60 @@ public class FarmerRepository {
 
 	@PersistenceContext
 	private EntityManager entityManager;
-	
-	@Transactional
-	public void saveFarmer(Farmer farmer,DetailsFarmer detailsFarmer) {
-				farmer.setDetailsFarmer(detailsFarmer); 
-				entityManager.persist(farmer);
-	}
-	
-	@Transactional
-	public void saveFarmerCrop(Crop crop) {
-		entityManager.persist(crop);
-	}
-	
-	@Transactional
-	public void applyInsurance(Insurance insurance) {
-		entityManager.persist(insurance);
-	}
-	
-	public Farmer login(String email,String password) {
-		Query q=entityManager.createQuery("select f from Farmer f where f.email=:em and f.password=:pa");
+
+	public Farmer login(String email, String password) {
+		Query q = entityManager.createQuery("select f from Farmer f where f.email=:em and f.password=:pa");
 		q.setParameter("em", email);
 		q.setParameter("pa", password);
 		return (Farmer) q.getSingleResult();
 	}
+
+	@Transactional
+	public void saveFarmer(Farmer farmer, DetailsFarmer detailsFarmer) {
+		farmer.setDetailsFarmer(detailsFarmer);
+		entityManager.persist(farmer);
+	}
+
+	@Transactional
+	public void placeSellRequest(Crop crop,int farmerId) {
+		Farmer farmer=entityManager.find(Farmer.class, farmerId);
+		crop.setFarmerCrop(farmer);
+		crop.setCropActiveStatus("no");
+		crop.setCropCurrentBid(0);
+		crop.setCropSoldPrice(0);
+		crop.setCropSoldStats("no");	
+		entityManager.persist(crop);
+	}
+
+	@Transactional
+	public void applyInsurance(Insurance insurance) {
+		insurance.setInsuranceCompany("LTI");
+		insurance.setNameOfInsuree("ABC1");
+		insurance.setClaimStatus("no");
+		entityManager.persist(insurance);
+	}
+
+	public void claimInsurance(Insurance insurance) {
+		Query q = entityManager.createQuery(
+				"update Insurance i set i.causeOfLoss=:col and i.dateOfLoss=:dol and i.claimStatus=:cs where i.policyNo=:pn");
+		q.setParameter("col", insurance.getCauseOfLoss());
+		q.setParameter("dol", insurance.getDateOfLoss());
+		q.setParameter("cs", "yes");
+		q.setParameter("pn", insurance.getPolicyNo());
+		Insurance insurance2=(Insurance) q.getSingleResult();
+	}
 	
+	public List<Crop> viewSoldCropHistory(int farmerId) {
+		Query q=entityManager.createQuery("select c from Crop c where c.Farmer.farmerId=:fid and c.cropSoldStats=:css");
+		q.setParameter("fid", farmerId);
+		q.setParameter("css", "yes");
+		List<Crop> list=q.getResultList();
+		return list;
+	}
+
+	public Crop viewMarketPlaceByCropId(int cropId){
+		Query q=entityManager.createQuery("select c from Crop c where c.cropId=:cid");
+		q.setParameter("cid", cropId);		
+		return	(Crop) q.getSingleResult();		
+	}
 }

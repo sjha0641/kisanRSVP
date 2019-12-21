@@ -16,6 +16,7 @@ public class Insurance {
 	@Id
 	@GeneratedValue
 	private int insuranceId;
+	
 	@GeneratedValue
 	private int policyNo;
 	
