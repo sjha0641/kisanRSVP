@@ -8,6 +8,8 @@ import javax.persistence.Query;
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Repository;
+
+import com.rsvp.entity.BidDetails;
 import com.rsvp.entity.Crop;
 import com.rsvp.entity.DetailsFarmer;
 import com.rsvp.entity.Farmer;
@@ -69,9 +71,21 @@ public class FarmerRepository {
 		return list;
 	}
 
-	public Crop viewMarketPlaceByCropId(int cropId){
+	public List<Crop> viewMarketPlaceByFrmerId(int farmerId){
+		Query q=entityManager.createQuery("select c from Crop c where c.Farmer.farmerID=:fid");
+		q.setParameter("cid", farmerId);	
+		List<Crop> list=q.getResultList();
+		return	list;		
+	}
+	public Crop viewMarketPlaceByCropId(int cropId) {
 		Query q=entityManager.createQuery("select c from Crop c where c.cropId=:cid");
-		q.setParameter("cid", cropId);		
-		return	(Crop) q.getSingleResult();		
+		q.setParameter("cid", cropId);
+		return (Crop) q.getSingleResult();
+	}
+	public List<BidDetails> viewMarketPlaceby(Crop crop) {
+		Query q= entityManager.createQuery("select b from BidDetails b where b.Crop.cropId=:cid");
+		q.setParameter("cid", crop.getCropId());
+		List<BidDetails> bidDetails=q.getResultList();
+		return bidDetails;
 	}
 }
