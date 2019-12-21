@@ -26,7 +26,7 @@ public class Crop {
 	private int cropSoldPrice;
 	private int cropCurrentBid;
 	private String cropActiveStatus;
-	private String cropSoldStats;
+	private String cropSoldStatus;
 	
 	@ManyToOne
 	@JoinColumn(name = "farmerId")
@@ -121,11 +121,11 @@ public class Crop {
 	}
 
 	public String getCropSoldStats() {
-		return cropSoldStats;
+		return cropSoldStatus;
 	}
 
-	public void setCropSoldStats(String cropSoldStats) {
-		this.cropSoldStats = cropSoldStats;
+	public void setCropSoldStats(String cropSoldStatus) {
+		this.cropSoldStatus = cropSoldStatus;
 	}
 
 	public Farmer getFarmerCrop() {
@@ -142,7 +142,7 @@ public class Crop {
 				+ cropFertilizerType + ", cropQuantity=" + cropQuantity + ", cropSoilPHCertificate="
 				+ cropSoilPHCertificate + ", cropLastDateForBid=" + cropLastDateForBid + ", cropBasicPrice="
 				+ cropBasicPrice + ", cropSoldPrice=" + cropSoldPrice + ", cropCurrentBid=" + cropCurrentBid
-				+ ", cropActiveStatus=" + cropActiveStatus + ", cropSoldStats=" + cropSoldStats + ", farmerCrop="
+				+ ", cropActiveStatus=" + cropActiveStatus + ", cropSoldStats=" + cropSoldStatus + ", farmerCrop="
 				+ farmerCrop + "]";
 	}
 

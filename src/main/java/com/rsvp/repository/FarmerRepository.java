@@ -27,6 +27,13 @@ public class FarmerRepository {
 		q.setParameter("pa", password);
 		return (Farmer) q.getSingleResult();
 	}
+	
+	public Farmer forgotPassword(String email) {
+		Query q = entityManager.createQuery("select f from Farmer f where f.email=:em");
+		q.setParameter("em", email);
+		Farmer farmer=(Farmer) q.getSingleResult();
+		return farmer;
+	}
 
 	@Transactional
 	public void saveFarmer(Farmer farmer, DetailsFarmer detailsFarmer) {

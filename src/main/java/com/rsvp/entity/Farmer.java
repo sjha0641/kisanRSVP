@@ -1,6 +1,7 @@
 package com.rsvp.entity;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -14,6 +15,7 @@ public class Farmer {
 	@Id
 	@GeneratedValue
 	private int farmerId;
+	@Column(unique=true)
 	private String farmerEmail;
 	private String farmerPassword;
 	private String farmerFullName;
