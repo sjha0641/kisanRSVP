@@ -1,7 +1,6 @@
 package com.rsvp.entity;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -15,11 +14,12 @@ public class Bidder {
 	@Id
 	@GeneratedValue
 	private int bidderId;
-	@Column(unique=true)
-	private String bidderEmail;
-	private String bidderPassword;
+	
 	private String bidderFullName;
 	private String bidderContact;
+	
+	@OneToOne(cascade=CascadeType.ALL)
+	private Login login;
 	
 	@OneToOne(mappedBy = "bidderDetails",cascade = CascadeType.ALL)
 	DetailsBidder detailsBidder;
@@ -30,22 +30,6 @@ public class Bidder {
 
 	public void setBidderId(int bidderId) {
 		this.bidderId = bidderId;
-	}
-
-	public String getBidderEmail() {
-		return bidderEmail;
-	}
-
-	public void setBidderEmail(String bidderEmail) {
-		this.bidderEmail = bidderEmail;
-	}
-
-	public String getBidderPassword() {
-		return bidderPassword;
-	}
-
-	public void setBidderPassword(String bidderPassword) {
-		this.bidderPassword = bidderPassword;
 	}
 
 	public String getBidderFullName() {
@@ -64,6 +48,14 @@ public class Bidder {
 		this.bidderContact = bidderContact;
 	}
 
+	public Login getLogin() {
+		return login;
+	}
+
+	public void setLogin(Login login) {
+		this.login = login;
+	}
+
 	public DetailsBidder getDetailsBidder() {
 		return detailsBidder;
 	}
@@ -74,10 +66,8 @@ public class Bidder {
 
 	@Override
 	public String toString() {
-		return "Bidder [bidderId=" + bidderId + ", bidderEmail=" + bidderEmail + ", bidderPassword=" + bidderPassword
-				+ ", bidderFullName=" + bidderFullName + ", bidderContact=" + bidderContact + ", detailsBidder="
-				+ detailsBidder + "]";
-	}
-	
+		return "Bidder [bidderId=" + bidderId + ", bidderFullName=" + bidderFullName + ", bidderContact="
+				+ bidderContact + ", login=" + login + ", detailsBidder=" + detailsBidder + "]";
+	}	
 	
 }

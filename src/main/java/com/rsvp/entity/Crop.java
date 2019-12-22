@@ -2,6 +2,7 @@ package com.rsvp.entity;
 
 import java.time.LocalDate;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -28,7 +29,7 @@ public class Crop {
 	private String cropActiveStatus;
 	private String cropSoldStatus;
 	
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name = "farmerId")
 	Farmer farmerCrop;
 	

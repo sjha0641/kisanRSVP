@@ -2,17 +2,14 @@ package com.rsvp.services;
 
 import java.util.List;
 
-import javax.mail.SendFailedException;
-import javax.persistence.Access;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.rsvp.entity.BidDetails;
 import com.rsvp.entity.Crop;
-import com.rsvp.entity.DetailsFarmer;
 import com.rsvp.entity.Farmer;
 import com.rsvp.entity.Insurance;
+import com.rsvp.entity.Login;
 import com.rsvp.exception.kisaanException;
 import com.rsvp.repository.FarmerRepository;
 
@@ -25,10 +22,10 @@ public class FarmerServices {
 	@Autowired
 	private SendMailService sendMailService;
 	
-	public Farmer login(String email, String password) throws kisaanException {
+	public Login login(String email, String password) throws kisaanException {
 		try {
-			Farmer farmer=farmerRepository.login(email,password);
-			return farmer;
+			Login login=farmerRepository.login(email,password);
+			return login;
 		}catch (Exception e) {
 			throw new kisaanException("Invalid Farmer login Credentional");
 		}
@@ -42,17 +39,18 @@ public class FarmerServices {
 		}
 	}
 	
-	public void saveFarmer(Farmer farmer, DetailsFarmer detailsFarmer) throws kisaanException {
+	public void saveFarmer(Farmer farmer) throws kisaanException, Exception {
+		
 		try {
-		farmerRepository.saveFarmer(farmer, detailsFarmer);
-		}catch (Exception e) {
-			throw new kisaanException("couldn't save a farmer");
-		}
-		try {
-		sendMailService.send(farmer.getFarmerEmail(), "wellcome to kisaan humari jaan", "Thanxs for registering with kisaanRSVP");
-		}catch (Exception e) {
-			throw new kisaanException("couldn't send an conformation email");
-		}
+			farmerRepository.saveFarmer(farmer);
+			}catch (Exception e) {
+				throw new kisaanException("couldn't save a farmer");
+			}
+			try {
+			sendMailService.send(farmer.getLogin().getEmail(), "wellcome to kisaan humari jaan", "Thanxs for registering with kisaanRSVP");
+			}catch (Exception e) {
+				throw new kisaanException("couldn't send an conformation email");
+			}
 	}
 	
 	public void placeSellRequest(Crop crop,int farmerId) throws kisaanException {

@@ -11,9 +11,9 @@ import org.springframework.stereotype.Repository;
 
 import com.rsvp.entity.BidDetails;
 import com.rsvp.entity.Crop;
-import com.rsvp.entity.DetailsFarmer;
 import com.rsvp.entity.Farmer;
 import com.rsvp.entity.Insurance;
+import com.rsvp.entity.Login;
 
 @Repository
 public class FarmerRepository {
@@ -21,11 +21,11 @@ public class FarmerRepository {
 	@PersistenceContext
 	private EntityManager entityManager;
 
-	public Farmer login(String email, String password) {
-		Query q = entityManager.createQuery("select f from Farmer f where f.email=:em and f.password=:pa");
+	public Login login(String email, String password) {
+		Query q = entityManager.createQuery("select l from Login l where l.email=:em and l.password=:pa");
 		q.setParameter("em", email);
 		q.setParameter("pa", password);
-		return (Farmer) q.getSingleResult();
+		return (Login) q.getSingleResult();
 	}
 	
 	public Farmer forgotPassword(String email) {
@@ -36,8 +36,7 @@ public class FarmerRepository {
 	}
 
 	@Transactional
-	public void saveFarmer(Farmer farmer, DetailsFarmer detailsFarmer) {
-		farmer.setDetailsFarmer(detailsFarmer);
+	public void saveFarmer(Farmer farmer) {
 		entityManager.persist(farmer);
 	}
 

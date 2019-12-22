@@ -1,7 +1,6 @@
 package com.rsvp.entity;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -15,11 +14,11 @@ public class Farmer {
 	@Id
 	@GeneratedValue
 	private int farmerId;
-	@Column(unique=true)
-	private String farmerEmail;
-	private String farmerPassword;
 	private String farmerFullName;
 	private String farmerContact;
+	
+	@OneToOne(cascade=CascadeType.ALL)
+	private Login login;
 	
 	@OneToOne(mappedBy = "farmerDetails",cascade = CascadeType.ALL)
 	DetailsFarmer detailsFarmer;
@@ -30,22 +29,6 @@ public class Farmer {
 
 	public void setFarmerId(int farmerId) {
 		this.farmerId = farmerId;
-	}
-
-	public String getFarmerEmail() {
-		return farmerEmail;
-	}
-
-	public void setFarmerEmail(String farmerEmail) {
-		this.farmerEmail = farmerEmail;
-	}
-
-	public String getFarmerPassword() {
-		return farmerPassword;
-	}
-
-	public void setFarmerPassword(String farmerPassword) {
-		this.farmerPassword = farmerPassword;
 	}
 
 	public String getFarmerFullName() {
@@ -64,6 +47,14 @@ public class Farmer {
 		this.farmerContact = farmerContact;
 	}
 
+	public Login getLogin() {
+		return login;
+	}
+
+	public void setLogin(Login login) {
+		this.login = login;
+	}
+
 	public DetailsFarmer getDetailsFarmer() {
 		return detailsFarmer;
 	}
@@ -74,11 +65,10 @@ public class Farmer {
 
 	@Override
 	public String toString() {
-		return "Farmer [farmerId=" + farmerId + ", farmerEmail=" + farmerEmail + ", farmerPassword=" + farmerPassword
-				+ ", farmerFullName=" + farmerFullName + ", farmerContact=" + farmerContact + ", detailsFarmer="
-				+ detailsFarmer + "]";
+		return "Farmer [farmerId=" + farmerId + ", farmerFullName=" + farmerFullName + ", farmerContact="
+				+ farmerContact + ", login=" + login + ", detailsFarmer=" + detailsFarmer + "]";
 	}
-	
+
 	
 	
 }
