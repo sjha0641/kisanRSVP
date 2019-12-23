@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.rsvp.entity.BidDetails;
 import com.rsvp.entity.Crop;
+import com.rsvp.entity.DetailsFarmer;
 import com.rsvp.entity.Farmer;
 import com.rsvp.entity.Insurance;
 import com.rsvp.entity.Login;
@@ -39,10 +40,10 @@ public class FarmerServices {
 		}
 	}
 	
-	public void saveFarmer(Farmer farmer) throws kisaanException, Exception {
+	public void saveFarmer(Farmer farmer,Login login,DetailsFarmer detailsFarmer) throws kisaanException {
 		
 		try {
-			farmerRepository.saveFarmer(farmer);
+			farmerRepository.saveFarmer(farmer,login,detailsFarmer);
 			}catch (Exception e) {
 				throw new kisaanException("couldn't save a farmer");
 			}

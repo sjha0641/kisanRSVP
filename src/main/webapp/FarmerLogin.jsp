@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form action="loginfarmers" method="post">
+<form action="loginfarmers.rsvp" method="post">
 Enter email:<input type="email" name="email" placeholder="Email">
 Enter password:<input type="password" name="password" placeholder="password">
 <button type="submit">Login</button>

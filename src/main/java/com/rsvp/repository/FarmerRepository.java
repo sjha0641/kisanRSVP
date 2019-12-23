@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import com.rsvp.entity.BidDetails;
 import com.rsvp.entity.Crop;
+import com.rsvp.entity.DetailsFarmer;
 import com.rsvp.entity.Farmer;
 import com.rsvp.entity.Insurance;
 import com.rsvp.entity.Login;
@@ -36,7 +37,9 @@ public class FarmerRepository {
 	}
 
 	@Transactional
-	public void saveFarmer(Farmer farmer) {
+	public void saveFarmer(Farmer farmer,Login login,DetailsFarmer detailsFarmer) {
+		farmer.setDetailsFarmer(detailsFarmer);
+		farmer.setLogin(login);
 		entityManager.persist(farmer);
 	}
 

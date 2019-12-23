@@ -8,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -35,7 +34,7 @@ public class Insurance {
 	
 	@ManyToOne
 	@JoinColumn(name = "farmerId")
-	List<Farmer> farmers;
+	Farmer farmers;
 
 	public int getInsuranceId() {
 		return insuranceId;
@@ -133,11 +132,11 @@ public class Insurance {
 		this.claimStatus = claimStatus;
 	}
 
-	public List<Farmer> getFarmers() {
+	public Farmer getFarmers() {
 		return farmers;
 	}
 
-	public void setFarmers(List<Farmer> farmers) {
+	public void setFarmers(Farmer farmers) {
 		this.farmers = farmers;
 	}
 
@@ -150,7 +149,4 @@ public class Insurance {
 				+ "]";
 	}
 
-	
-	
-	
 }

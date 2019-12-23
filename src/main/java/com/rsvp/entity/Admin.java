@@ -6,6 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.stereotype.Component;
+@Component
 @Entity
 @Table(name = "TBL_KISAANADMIN")
 public class Admin {

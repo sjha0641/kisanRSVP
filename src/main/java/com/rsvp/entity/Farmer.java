@@ -7,6 +7,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.springframework.stereotype.Component;
+@Component
 @Entity
 @Table(name = "TBL_KISAANFARMER")
 public class Farmer {
@@ -46,7 +48,6 @@ public class Farmer {
 	public void setFarmerContact(String farmerContact) {
 		this.farmerContact = farmerContact;
 	}
-
 
 	public Login getLogin() {
 		return login;
