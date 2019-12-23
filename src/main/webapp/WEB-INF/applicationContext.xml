@@ -13,7 +13,7 @@
 
 	<!-- Loading Annotated Beans -->
 	<context:component-scan
-		base-package="com.rsvp.controller,repository,services" />
+		base-package="com.rsvp.controller,com.rsvp.repository,com.rsvp.services" />
 		
 	<!-- DataSource Configuration -->
 	<bean id="ds" class="org.springframework.jdbc.datasource.DriverManagerDataSource"> 

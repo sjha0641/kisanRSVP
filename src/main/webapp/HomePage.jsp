@@ -7,6 +7,6 @@
 <title>Kisaan RSVP Home PAGE</title>
 </head>
 <body>
-<a href="login">Login</a>
+<a href="login.rsvp">Login</a>
 </body>
 </html>

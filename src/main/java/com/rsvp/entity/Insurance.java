@@ -1,11 +1,13 @@
 package com.rsvp.entity;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -31,9 +33,9 @@ public class Insurance {
 	private LocalDate dateOfLoss;
 	private String claimStatus;
 	
-	@OneToMany
+	@ManyToOne
 	@JoinColumn(name = "farmerId")
-	Farmer farmer;
+	List<Farmer> farmers;
 
 	public int getInsuranceId() {
 		return insuranceId;
@@ -131,12 +133,12 @@ public class Insurance {
 		this.claimStatus = claimStatus;
 	}
 
-	public Farmer getFarmer() {
-		return farmer;
+	public List<Farmer> getFarmers() {
+		return farmers;
 	}
 
-	public void setFarmer(Farmer farmer) {
-		this.farmer = farmer;
+	public void setFarmers(List<Farmer> farmers) {
+		this.farmers = farmers;
 	}
 
 	@Override
@@ -144,9 +146,11 @@ public class Insurance {
 		return "Insurance [insuranceId=" + insuranceId + ", policyNo=" + policyNo + ", Season=" + Season + ", year="
 				+ year + ", cropName=" + cropName + ", sumInsured=" + sumInsured + ", area=" + area
 				+ ", insuranceCompany=" + insuranceCompany + ", nameOfInsuree=" + nameOfInsuree + ", causeOfLoss="
-				+ causeOfLoss + ", dateOfLoss=" + dateOfLoss + ", claimStatus=" + claimStatus + ", farmer=" + farmer
+				+ causeOfLoss + ", dateOfLoss=" + dateOfLoss + ", claimStatus=" + claimStatus + ", farmers=" + farmers
 				+ "]";
 	}
+
+	
 	
 	
 }

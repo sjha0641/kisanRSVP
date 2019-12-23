@@ -47,6 +47,7 @@ public class Farmer {
 		this.farmerContact = farmerContact;
 	}
 
+
 	public Login getLogin() {
 		return login;
 	}
