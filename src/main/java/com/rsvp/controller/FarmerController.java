@@ -44,7 +44,7 @@ public class FarmerController {
 			@RequestParam("farmerAadhaarfile") MultipartFile farmerAadhaarfile,
 			@RequestParam("farmerCertificatefile") MultipartFile farmerCertificatefile,
 			@RequestParam("farmerPanfile") MultipartFile farmerPanfile, ModelMap model)
-			throws kisaanException, Exception {
+			throws kisaanException {
 		
 		String pathAadhar = "d:/uploads/aadhar/";
 		String pathCertificate = "d:/uploads/cartificate/";
