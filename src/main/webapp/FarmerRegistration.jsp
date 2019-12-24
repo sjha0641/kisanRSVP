@@ -11,7 +11,7 @@
 
 
 <p>Personal Details</p><br>
-Full Name <input type="text" name="farmerFullName"/> <br/>
+Full Name <input type="text" name="farmerFullName" /> <br/>
 Contact no <input type="number" name="farmerContact"/> <br/>
 Enter Your E-mail Id <input type="text" name="email"/> <br/>
 

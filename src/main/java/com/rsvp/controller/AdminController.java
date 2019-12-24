@@ -37,7 +37,6 @@ public class AdminController {
 	}
 	
 	
-	
 	@RequestMapping(path ="/fetchAllFarmers.rsvp")
 	public String fetchAllFarmer( ModelMap model, HttpServletRequest request) {
 		
@@ -55,4 +54,24 @@ public class AdminController {
 		model.put("listOfBidders", list);
 		return "adminBidderDetails.jsp";
 	}
+	
+	@RequestMapping(path ="/fetchAllFarmersUnverified.rsvp")
+	public String fetchAllUnverifiedFarmer( ModelMap model, HttpServletRequest request) {
+		
+		List<Farmer> list = adminServices.fetchAllUnverifiedFarmer();
+		
+		model.put("listOfFarmers", list);
+		return "adminApprove.jsp";
+	}
+	
+	@RequestMapping(path ="/fetchAllBiddersUnverified.rsvp")
+	public String fetchAllUnverifiedBidder( ModelMap model, HttpServletRequest request) {
+		
+		List<Bidder> list = adminServices.fetchAllUnverifiedBidder();
+		
+		model.put("listOfBidders", list);
+		return "adminBidderDetails.jsp";
+	}
+	
+	
 }

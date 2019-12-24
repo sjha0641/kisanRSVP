@@ -38,4 +38,19 @@ public class AdminRepository {
 		return list;
 	}
 
+	public List<Farmer> fetchAllUnverifiedFarmer(){
+		Query q =entityManager.createQuery("select f from Farmer f where f.verificationStatus=:vs");
+		q.setParameter("vs", "NO");
+		List<Farmer> list=q.getResultList();
+		return list;
+	}
+	
+	public List<Bidder> fetchAllUnverifiedBidder(){
+		Query q =entityManager.createQuery("select b from Bidder b where b.verificationStatus=:vs");
+		q.setParameter("vs", "NO");
+		List<Bidder> list=q.getResultList();
+		return list;
+	}
+
+	
 }

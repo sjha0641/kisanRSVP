@@ -38,4 +38,15 @@ public class AdminServices {
 		return list;
 	}
 
+	
+	public List<Farmer> fetchAllUnverifiedFarmer() {
+		List<Farmer> list=adminRepository.fetchAllUnverifiedFarmer();
+		return list;
+	}
+	
+	public List<Bidder> fetchAllUnverifiedBidder() {
+		List<Bidder> list=adminRepository.fetchAllUnverifiedBidder();
+		return list;
+	}
+	
 }

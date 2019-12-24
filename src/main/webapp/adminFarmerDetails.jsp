@@ -13,13 +13,20 @@
 	<div>
 		<ul>
 			<li><a class="active" href="adminDashboard.jsp">Home</a></li>
-			<li><a href="#">Approval</a></li>
+			<li><a href="adminApproval.jsp">Approval</a></li>
 			<li><a href="adminLogin.jsp">LogOut  ${ Session.Abandon }</a></li>
 		</ul>
 	</div>
+	<h4>_____Farmer Details______</h4>
 	<table border="1">
+		<tr>
+			<th>Id</th>
+			<th>Name</th>
+			<th>Contact</th>
+		</tr>
 	<c:forEach items="${ listOfFarmers }" var="farmer">
 		<tr>
+			<td>${farmer.farmerId }</td>
 			<td>${farmer.farmerFullName }</td>
 			<td>${farmer.farmerContact }</td>	
 		</tr>
