@@ -13,7 +13,7 @@
 	<div>
 		<ul>
 			<li><a class="active" href="adminDashboard.jsp">Home</a></li>
-			<li><a href="adminApproval.jsp">Approval</a></li>
+			<li><a href="fetchAllFarmersUnverified.rsvp">Approval</a></li>
 			<li><a href="adminLogin.jsp">LogOut  ${ Session.Abandon }</a></li>
 		</ul>
 	</div>
@@ -24,12 +24,12 @@
 			<th>Name</th>
 			<th>Contact</th>
 		</tr>
-	<c:forEach items="${ listOfFarmers }" var="farmer">
+	<c:forEach items="${ listOfUnverifiedFarmers }" var="Crop">
 		<tr>
-			<td>${farmer.farmerId }</td>
-			<td>${farmer.farmerFullName }</td>
-			<td>${farmer.farmerContact }</td>	
-			<td><button type="submit" name="approve">Approve</button></td>
+			<td>${ Crop.cropType}</td>
+			<td>${ Crop.cropName}</td>
+			<td>${ Crop.cropQuantity }</td>	
+			<td><a href="http://localhost:9090/rest/approve/${ Crop.cropId }">Approve</a></td>
 		</tr>
 	
 	</c:forEach>

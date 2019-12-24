@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.rsvp.entity.Admin;
 import com.rsvp.entity.Bidder;
+import com.rsvp.entity.Crop;
 import com.rsvp.entity.Farmer;
 
 @Repository
@@ -38,10 +39,10 @@ public class AdminRepository {
 		return list;
 	}
 
-	public List<Farmer> fetchAllUnverifiedFarmer(){
-		Query q =entityManager.createQuery("select f from Farmer f where f.verificationStatus=:vs");
-		q.setParameter("vs", "NO");
-		List<Farmer> list=q.getResultList();
+	public List<Crop> fetchAllUnverifiedFarmer(){
+		Query q =entityManager.createQuery("select f from Crop f where f.cropSoldStatus=:vs");
+		q.setParameter("vs", "no");
+		List<Crop> list=q.getResultList();
 		return list;
 	}
 	
@@ -52,5 +53,10 @@ public class AdminRepository {
 		return list;
 	}
 
+	public void approvecrop(int CropId) {
+		Crop crop=entityManager.find(Crop.class,CropId);
+		crop.setCropActiveStatus("yes");
+		entityManager.merge(crop);
+	}
 	
 }

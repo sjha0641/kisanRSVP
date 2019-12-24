@@ -7,17 +7,20 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.rsvp.entity.Admin;
 import com.rsvp.entity.Bidder;
+import com.rsvp.entity.Crop;
 import com.rsvp.entity.Farmer;
 import com.rsvp.services.AdminServices;
 
 @Controller
-@SessionAttributes("loggedInAdmin")
+@SessionAttributes({"loggedInAdmin","listOfUnverifiedFarmers"})
 public class AdminController {
 	
 	@Autowired
@@ -58,10 +61,10 @@ public class AdminController {
 	@RequestMapping(path ="/fetchAllFarmersUnverified.rsvp")
 	public String fetchAllUnverifiedFarmer( ModelMap model, HttpServletRequest request) {
 		
-		List<Farmer> list = adminServices.fetchAllUnverifiedFarmer();
+		List<Crop> list = adminServices.fetchAllUnverifiedFarmer();
 		
-		model.put("listOfFarmers", list);
-		return "adminApprove.jsp";
+		model.put("listOfUnverifiedFarmers", list);
+		return "adminApproval.jsp";
 	}
 	
 	@RequestMapping(path ="/fetchAllBiddersUnverified.rsvp")
@@ -73,5 +76,10 @@ public class AdminController {
 		return "adminBidderDetails.jsp";
 	}
 	
+	
+	@RequestMapping(value = "/rest/approve/{cropId}", method = RequestMethod.PUT)
+	public void approvecrop(@PathVariable("cropId") int CropId) {
+		adminServices.approvecrop(CropId);
+	}
 	
 }

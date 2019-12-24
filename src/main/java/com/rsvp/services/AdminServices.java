@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.rsvp.entity.Admin;
 import com.rsvp.entity.Bidder;
+import com.rsvp.entity.Crop;
 import com.rsvp.entity.Farmer;
 import com.rsvp.exception.AdminLoginException;
 import com.rsvp.repository.AdminRepository;
@@ -39,14 +40,18 @@ public class AdminServices {
 	}
 
 	
-	public List<Farmer> fetchAllUnverifiedFarmer() {
-		List<Farmer> list=adminRepository.fetchAllUnverifiedFarmer();
+	public List<Crop> fetchAllUnverifiedFarmer() {
+		List<Crop> list=adminRepository.fetchAllUnverifiedFarmer();
 		return list;
 	}
 	
 	public List<Bidder> fetchAllUnverifiedBidder() {
 		List<Bidder> list=adminRepository.fetchAllUnverifiedBidder();
 		return list;
+	}
+	
+	public void approvecrop(int CropId) {
+		adminRepository.approvecrop(CropId);
 	}
 	
 }
