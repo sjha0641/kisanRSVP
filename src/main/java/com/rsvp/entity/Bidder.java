@@ -10,7 +10,7 @@ import javax.persistence.Table;
 import org.springframework.stereotype.Component;
 @Component
 @Entity
-@Table(name = "TBL_agricultureBid")
+@Table(name = "TBL_KISAANBIDDER")
 public class Bidder {
 
 	@Id

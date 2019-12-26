@@ -11,10 +11,13 @@
 	
 }
 
+input {
+	margin-right: 100%;
+}
+
 .gap{
 	padding: 5px;
 }
-
 
 
 ul {

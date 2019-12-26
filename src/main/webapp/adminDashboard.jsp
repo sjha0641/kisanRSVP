@@ -11,8 +11,9 @@
 	<h1>${sessionScope.loggedInAdmin.adminEmail }</h1>
 	<div>
 		<ul>
-			<li><a class="active" href="#">Home</a></li>
-			<li><a href="adminApproval.jsp">Approval</a></li>
+			<li><a class="active" href="adminDashboard.jsp">Home</a></li>
+			<li><a href="fetchAllUnverifiedCrops.rsvp">Crop Approval</a></li>
+			<li><a href="fetchAllBidding.rsvp">Bidding Approval</a></li>
 			<li><a href="adminLogin.jsp">LogOut  ${ Session.Abandon }</a></li>
 		</ul>
 	</div>

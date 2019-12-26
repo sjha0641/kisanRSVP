@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Farmer Details</title>
+<title>Approved Bids</title>
 <link rel="stylesheet" href="adminLogin.css">
 </head>
 <body>
@@ -13,29 +13,27 @@
 	<div>
 		<ul>
 			<li><a class="active" href="adminDashboard.jsp">Home</a></li>
-		<li><a href="fetchAllUnverifiedCrops.rsvp">Crop Approval</a></li>
+			<li><a href="fetchAllUnverifiedCrops.rsvp">Crop Approval</a></li>
 			<li><a href="fetchAllBidding.rsvp">Bidding Approval</a></li>
 			<li><a href="adminLogin.jsp">LogOut  ${ Session.Abandon }</a></li>
 		</ul>
 	</div>
-	<h4>_____Farmer Details______</h4>
+	<h4>_____Bid Status______</h4>
 	<table border="1">
 		<tr>
-			<th>Id</th>
-			<th>Name</th>
-			<th>Contact</th>
-		
+			<th>Bid Id</th>
+			<th>Bid Amount</th>
+			<th>Status</th>
 		</tr>
-	<c:forEach items="${ listOfFarmers }" var="farmer">
+	<c:forEach items="${ listOfBidding }" var="bid">
 		<tr>
-			<td>${farmer.farmerId }</td>
-			<td>${farmer.farmerFullName }</td>
-			<td>${farmer.farmerContact }</td>
-			
+			<form action="approveBid.rsvp">
+			<td>${ bid.bidId}</td>
+			<td>${ bid.bidAmount}</td>
+			<td><input type="submit"  value="Approve"/></td>
+			</form>
 		</tr>
-	
 	</c:forEach>
 </table>
-	
 </body>
 </html>

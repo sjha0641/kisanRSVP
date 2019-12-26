@@ -7,8 +7,10 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.rsvp.entity.Admin;
+import com.rsvp.entity.BidDetails;
 import com.rsvp.entity.Bidder;
 import com.rsvp.entity.Crop;
 import com.rsvp.entity.Farmer;
@@ -39,24 +41,39 @@ public class AdminRepository {
 		return list;
 	}
 
-	public List<Crop> fetchAllUnverifiedFarmer(){
-		Query q =entityManager.createQuery("select f from Crop f where f.cropSoldStatus=:vs");
+	public List<Crop> fetchAllUnverifiedCrop(){
+		Query q =entityManager.createQuery("select f from Crop f where f.cropActiveStatus=:vs");
 		q.setParameter("vs", "no");
 		List<Crop> list=q.getResultList();
 		return list;
 	}
-	
-	public List<Bidder> fetchAllUnverifiedBidder(){
-		Query q =entityManager.createQuery("select b from Bidder b where b.verificationStatus=:vs");
-		q.setParameter("vs", "NO");
-		List<Bidder> list=q.getResultList();
+
+	public List<Crop> fetchAllApprovedCrop(){
+		Query q =entityManager.createQuery("select f from Crop f where f.cropActiveStatus=:vs");
+		q.setParameter("vs", "yes");
+		List<Crop> list=q.getResultList();
 		return list;
 	}
-
-	public void approvecrop(int CropId) {
+	
+	public List<BidDetails> fetchAllBidding(){
+		Query q =entityManager.createQuery("select b from BidDetails b where b.bidStatus=:bs");
+		q.setParameter("bs", "active");
+		List<BidDetails> list=q.getResultList();
+		return list;
+	}
+	
+	
+	@Transactional
+	public void approveCrop(int CropId) {
 		Crop crop=entityManager.find(Crop.class,CropId);
 		crop.setCropActiveStatus("yes");
 		entityManager.merge(crop);
+	}
+	
+	@Transactional
+	public void deleteFarmer(int farmerId) {
+		Farmer farmer=entityManager.find(Farmer.class,farmerId);
+		entityManager.remove(farmer);
 	}
 	
 }

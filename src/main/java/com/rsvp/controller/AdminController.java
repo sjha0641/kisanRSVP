@@ -7,20 +7,19 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.rsvp.entity.Admin;
+import com.rsvp.entity.BidDetails;
 import com.rsvp.entity.Bidder;
 import com.rsvp.entity.Crop;
 import com.rsvp.entity.Farmer;
 import com.rsvp.services.AdminServices;
 
 @Controller
-@SessionAttributes({"loggedInAdmin","listOfUnverifiedFarmers"})
+@SessionAttributes({"loggedInAdmin","listOfUnverifiedCrops","listOfApprovedCrops","listOfBidding"})
 public class AdminController {
 	
 	@Autowired
@@ -58,28 +57,51 @@ public class AdminController {
 		return "adminBidderDetails.jsp";
 	}
 	
-	@RequestMapping(path ="/fetchAllFarmersUnverified.rsvp")
-	public String fetchAllUnverifiedFarmer( ModelMap model, HttpServletRequest request) {
+	@RequestMapping(path ="/fetchAllUnverifiedCrops.rsvp")
+	public String fetchAllUnverifiedCrop( ModelMap model, HttpServletRequest request) {
 		
-		List<Crop> list = adminServices.fetchAllUnverifiedFarmer();
+		List<Crop> list = adminServices.fetchAllUnverifiedCrop();
 		
-		model.put("listOfUnverifiedFarmers", list);
+		model.put("listOfUnverifiedCrops", list);
 		return "adminApproval.jsp";
 	}
-	
-	@RequestMapping(path ="/fetchAllBiddersUnverified.rsvp")
-	public String fetchAllUnverifiedBidder( ModelMap model, HttpServletRequest request) {
+
+	@RequestMapping(path ="/fetchAllApprovedCrops.rsvp")
+	public String fetchAllApprovedCrop( ModelMap model, HttpServletRequest request) {
 		
-		List<Bidder> list = adminServices.fetchAllUnverifiedBidder();
+		List<Crop> list = adminServices.fetchAllApprovedCrop();
 		
-		model.put("listOfBidders", list);
-		return "adminBidderDetails.jsp";
+		model.put("listOfApprovedCrops", list);
+		return "adminApprovedCrops.jsp";
 	}
 	
-	
-	@RequestMapping(value = "/rest/approve/{cropId}", method = RequestMethod.PUT)
-	public void approvecrop(@PathVariable("cropId") int CropId) {
-		adminServices.approvecrop(CropId);
+	@RequestMapping(path ="/fetchAllBidding.rsvp")
+	public String fetchAllBidding( ModelMap model, HttpServletRequest request) {
+		
+		List<BidDetails> list = adminServices.fetchAllBidding();
+		
+		model.put("listOfBidding", list);
+		return "adminApprovedBids.jsp";
 	}
+	
+	@RequestMapping(path = "/approve.rsvp")
+	public String approveCrop(@RequestParam("cropId") int CropId, ModelMap model) {
+		try {
+			adminServices.approveCrop(CropId);
+			return "adminApproval.jsp";
+		}
+		catch(Exception e) {
+			model.put("noCrops", "no Crops To Be Approved");
+			return "adminApproval.jsp";
+		}
+	}
+	
+	@RequestMapping(path = "/deleteFarmer.rsvp")
+	public String removeFarmer(@RequestParam("farmerId") int farmerId, ModelMap model) {
+			adminServices.deleteFarmer(farmerId);
+			return "adminFarmerDetails.jsp";
+
+	}
+	
 	
 }

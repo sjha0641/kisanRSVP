@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.rsvp.entity.Admin;
+import com.rsvp.entity.BidDetails;
 import com.rsvp.entity.Bidder;
 import com.rsvp.entity.Crop;
 import com.rsvp.entity.Farmer;
@@ -40,18 +41,28 @@ public class AdminServices {
 	}
 
 	
-	public List<Crop> fetchAllUnverifiedFarmer() {
-		List<Crop> list=adminRepository.fetchAllUnverifiedFarmer();
+	public List<Crop> fetchAllUnverifiedCrop() {
+		List<Crop> list=adminRepository.fetchAllUnverifiedCrop();
 		return list;
 	}
 	
-	public List<Bidder> fetchAllUnverifiedBidder() {
-		List<Bidder> list=adminRepository.fetchAllUnverifiedBidder();
+	public List<Crop> fetchAllApprovedCrop() {
+		List<Crop> list=adminRepository.fetchAllApprovedCrop();
 		return list;
 	}
 	
-	public void approvecrop(int CropId) {
-		adminRepository.approvecrop(CropId);
+	public void approveCrop(int CropId) {
+		adminRepository.approveCrop(CropId);
 	}
+	
+	public List<BidDetails> fetchAllBidding() {
+		List<BidDetails> list=adminRepository.fetchAllBidding();
+		return list;
+	}
+	
+	public void deleteFarmer(int farmerId) {
+		adminRepository.deleteFarmer(farmerId);
+	}
+	
 	
 }
