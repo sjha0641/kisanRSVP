@@ -1,39 +1,103 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+	pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="ISO-8859-1">
 <title>Approved Bids</title>
 <link rel="stylesheet" href="adminLogin.css">
+<style type="text/css">
+.main{
+margin-top: 0px;
+width: 100%;
+}
+.first{
+	
+	float: left;
+	width: 50%;
+}
+
+.second{
+	float: left;
+	width: 50%;
+
+}
+
+</style>
 </head>
 <body>
-<h1>${sessionScope.loggedInAdmin.adminEmail }</h1>
-	<div>
+	<h1>${sessionScope.loggedInAdmin.adminEmail }</h1>
+	<div >
 		<ul>
 			<li><a class="active" href="adminDashboard.jsp">Home</a></li>
 			<li><a href="fetchAllUnverifiedCrops.rsvp">Crop Approval</a></li>
 			<li><a href="fetchAllBidding.rsvp">Bidding Approval</a></li>
-			<li><a href="adminLogin.jsp">LogOut  ${ Session.Abandon }</a></li>
+			<li><a href="fetchSoldBidding.rsvp">Sold Crops</a></li>
+			<li><a href="adminLogout.rsvp">LogOut</a></li>
 		</ul>
 	</div>
-	<h4>_____Bid Status______</h4>
-	<table border="1">
-		<tr>
-			<th>Bid Id</th>
-			<th>Bid Amount</th>
-			<th>Status</th>
-		</tr>
-	<c:forEach items="${ listOfBidding }" var="bid">
-		<tr>
-			<form action="approveBid.rsvp">
-			<td>${ bid.bidId}</td>
-			<td>${ bid.bidAmount}</td>
-			<td><input type="submit"  value="Approve"/></td>
-			</form>
-		</tr>
-	</c:forEach>
-</table>
+<div class="main">
+
+	<div class="first">
+	<h4>_____List of Bids______</h4>
+		<table border="1">
+			<tr>
+				<th>Bid Id</th>
+				<th>Bid Amount</th>
+				<th>Status</th>
+				<th>Crop Id</th>
+				<th>Current Bid</th>
+			</tr>
+			<c:forEach items="${ listOfBidding }" var="bid">
+				<tr>
+						<td>${ bid.bidId}</td>
+						<td>${ bid.bidAmount}</td>
+						<td>${ bid.bidStatus}</td>
+						<td>${ bid.cropBid.cropId}</td>
+						<td>${ bid.cropBid.cropCurrentBid }</td>
+				</tr>
+			</c:forEach>
+		</table>
+	</div>
+	<div class="second">
+	<h4>_____Bids based on Crops______</h4>
+		<table border="1">
+		<form action="fetchAllBiddingBasedOnCropId.rsvp">
+		<label>Enter CropId</label>
+		<input type="number" name="cropId"/>
+		<input type="submit" value="Submit" /></td>
+		<h3>${ NoBids }</h3>
+		</form>
+			<tr>
+				<th>Bid Id</th>
+				<th>Bid Amount</th>
+				<th>Status</th>
+				<th>Current Bid</th>
+				<th>Last Date</th>
+				<th>Approve</th>
+			</tr>
+			<c:forEach items="${ listOfBiddingBasedOnCropId }" var="bid">
+				<tr>
+					<form action="approveBid.rsvp">
+						<td>${ bid.bidId}</td>
+						<td>${ bid.bidAmount}</td>
+						<td>${ bid.bidStatus}</td>
+						<td>${ bid.cropBid.cropCurrentBid }</td>
+						<td>${ bid.cropBid.cropLastDateForBid }</td>
+						<td>
+						<input type="text" name="bidId" value="${ bid.bidId }" hidden/>
+						<input type="text" name="cropId" value="${ bid.cropBid.cropId }" hidden/>
+						<input type="submit" value="Approve" /></td>
+					</form>
+				</tr>
+			</c:forEach>
+			
+		</table>
+	</div>
+</div>
+	
+	
+	
 </body>
 </html>

@@ -15,7 +15,8 @@
 			<li><a class="active" href="adminDashboard.jsp">Home</a></li>
 			<li><a href="fetchAllUnverifiedCrops.rsvp">Crop Approval</a></li>
 			<li><a href="fetchAllBidding.rsvp">Bidding Approval</a></li>
-			<li><a href="adminLogin.jsp">LogOut  ${ Session.Abandon }</a></li>
+			<li><a href="fetchSoldBidding.rsvp">Sold Crops</a></li>
+			<li><a href="adminLogout.rsvp">LogOut</a></li>
 		</ul>
 	</div>
 	<h4>_____Crop Status______</h4>
@@ -25,6 +26,8 @@
 			<th>Name</th>
 			<th>Quantity</th>
 			<th>Basic Price</th>
+			<th>Sold Price</th>
+			<th>Current Bid</th>
 			<th>Status</th>
 		</tr>
 	<c:forEach items="${ listOfUnverifiedCrops }" var="Crop">
@@ -34,6 +37,8 @@
 			<td>${ Crop.cropName}</td>
 			<td>${ Crop.cropQuantity }</td>
 			<td>${ Crop.cropBasicPrice }</td>
+			<td>${ Crop.cropSoldPrice }</td>
+			<td>${ Crop.cropCurrentBid }</td>
 			<td>	
 			<input type="text" name="cropId" value="${ Crop.cropId }" hidden/>
 			<input type="submit"  value="Approve" /></td>

@@ -19,10 +19,10 @@ public class AdminServices {
 	@Autowired
 	private AdminRepository adminRepository;
 	
-	public Admin login(String email, String password) throws AdminLoginException{
+	public Admin login(Admin admin1) throws AdminLoginException{
 	
 		try {
-			Admin admin= adminRepository.fetch(email, password);
+			Admin admin= adminRepository.fetch(admin1);
 			return admin;
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -60,9 +60,22 @@ public class AdminServices {
 		return list;
 	}
 	
-	public void deleteFarmer(int farmerId) {
-		adminRepository.deleteFarmer(farmerId);
+	public List<BidDetails> fetchSoldBidding() {
+		List<BidDetails> list=adminRepository.fetchSoldBidding();
+		return list;
 	}
 	
+	public List<BidDetails> fetchAllBiddingBasedOnCropId(int cropId) {
+		List<BidDetails> list=adminRepository.fetchAllBiddingBasedOnCropId(cropId);
+		return list;
+	}
+	
+	public void approveBid(int cropId, int bidId) {
+		adminRepository.approveBid(cropId , bidId);
+	}
+	
+	public long pendingApproval() {
+		return adminRepository.pendingApproval();
+	}
 	
 }

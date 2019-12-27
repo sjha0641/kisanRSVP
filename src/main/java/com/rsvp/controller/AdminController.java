@@ -2,7 +2,7 @@ package com.rsvp.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,18 +19,21 @@ import com.rsvp.entity.Farmer;
 import com.rsvp.services.AdminServices;
 
 @Controller
-@SessionAttributes({"loggedInAdmin","listOfUnverifiedCrops","listOfApprovedCrops","listOfBidding"})
+@SessionAttributes({"loggedInAdmin","listOfUnverifiedCrops","listOfApprovedCrops","listOfBidding","pendingCrop","NoBids"})
 public class AdminController {
 	
 	@Autowired
 	private AdminServices adminServices;
 	
 	@RequestMapping("/adminLogin.rsvp")
-	public String adminLogin(@RequestParam("adminEmail") String adminEmail, @RequestParam("adminPassword") String adminPassword, ModelMap model) {
+	public String adminLogin(HttpSession session, Admin admin1, ModelMap model) {
 		try {
-			Admin admin=(Admin)adminServices.login(adminEmail, adminPassword);
+			Admin admin=(Admin)adminServices.login(admin1);
+			long count=adminServices.pendingApproval();
+			model.put("pendingCrop", count);
 			model.put("loggedInAdmin", admin);
 			return "adminDashboard.jsp";
+			
 		} catch (Exception e) {
 			model.put("errorMsg", "Please login again");
 			return "adminLogin.jsp";
@@ -38,9 +41,15 @@ public class AdminController {
 		}
 	}
 	
+	@RequestMapping("/adminLogout.rsvp")
+	public String logout(HttpSession session ) {
+	    session.invalidate();
+	    return "adminLogin.jsp";
+	} 
+	
 	
 	@RequestMapping(path ="/fetchAllFarmers.rsvp")
-	public String fetchAllFarmer( ModelMap model, HttpServletRequest request) {
+	public String fetchAllFarmer( ModelMap model) {
 		
 		List<Farmer> list = adminServices.fetchAllFarmer();
 		
@@ -49,7 +58,7 @@ public class AdminController {
 	}
 	
 	@RequestMapping(path ="/fetchAllBidders.rsvp")
-	public String fetchAllBidder( ModelMap model, HttpServletRequest request) {
+	public String fetchAllBidder( ModelMap model) {
 		
 		List<Bidder> list = adminServices.fetchAllBidder();
 		
@@ -58,7 +67,7 @@ public class AdminController {
 	}
 	
 	@RequestMapping(path ="/fetchAllUnverifiedCrops.rsvp")
-	public String fetchAllUnverifiedCrop( ModelMap model, HttpServletRequest request) {
+	public String fetchAllUnverifiedCrop( ModelMap model) {
 		
 		List<Crop> list = adminServices.fetchAllUnverifiedCrop();
 		
@@ -67,21 +76,41 @@ public class AdminController {
 	}
 
 	@RequestMapping(path ="/fetchAllApprovedCrops.rsvp")
-	public String fetchAllApprovedCrop( ModelMap model, HttpServletRequest request) {
+	public String fetchAllApprovedCrop( ModelMap model) {
 		
 		List<Crop> list = adminServices.fetchAllApprovedCrop();
-		
 		model.put("listOfApprovedCrops", list);
 		return "adminApprovedCrops.jsp";
 	}
 	
 	@RequestMapping(path ="/fetchAllBidding.rsvp")
-	public String fetchAllBidding( ModelMap model, HttpServletRequest request) {
-		
+	public String fetchAllBidding( ModelMap model) {
 		List<BidDetails> list = adminServices.fetchAllBidding();
-		
 		model.put("listOfBidding", list);
 		return "adminApprovedBids.jsp";
+	}
+	
+	@RequestMapping(path ="/fetchSoldBidding.rsvp")
+	public String fetchSoldBidding( ModelMap model) {
+		
+		List<BidDetails> list = adminServices.fetchSoldBidding();
+		
+		model.put("listOfSoldBidding", list);
+		return "adminSoldCrops.jsp";
+	}
+	
+	@RequestMapping(path ="/fetchAllBiddingBasedOnCropId.rsvp")
+	public String fetchAllBiddingBasedOnCropId(@RequestParam("cropId") int cropId, ModelMap model) {
+		try {
+			List<BidDetails> list = adminServices.fetchAllBiddingBasedOnCropId(cropId);
+			model.put("listOfBiddingBasedOnCropId", list);
+			return "adminApprovedBids.jsp";
+		}catch(Exception e) {
+			model.put("NoBids", "No bid for this crop id");
+			return "adminApprovedBids.jsp";
+				
+		}
+	
 	}
 	
 	@RequestMapping(path = "/approve.rsvp")
@@ -96,12 +125,23 @@ public class AdminController {
 		}
 	}
 	
-	@RequestMapping(path = "/deleteFarmer.rsvp")
-	public String removeFarmer(@RequestParam("farmerId") int farmerId, ModelMap model) {
-			adminServices.deleteFarmer(farmerId);
-			return "adminFarmerDetails.jsp";
-
+	@RequestMapping(path = "/approveBid.rsvp")
+	public String approveBid(@RequestParam("cropId") int cropId, @RequestParam("bidId") int bidId, ModelMap model) {
+		adminServices.approveBid(cropId, bidId);
+		return "redirect:fetchAllBidding.rsvp";
 	}
+	
+	
+	@RequestMapping(path = "/fetchAllPendingApprovals.rsvp")
+	public String pendingApproval(ModelMap model) {
+		
+			long count=adminServices.pendingApproval();
+			model.put("pendingCrop", "Welcome! Pending crops to be approved are: "+count);
+			return "adminDashboard.jsp";
+		
+		
+	}
+	
 	
 	
 }

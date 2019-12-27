@@ -7,8 +7,7 @@
 	padding: 5px;
 	border: 2px solid;
 	border-color: black;
-	background-color: #7aeb34;
-	
+	background-color: #85C1E9;
 }
 
 input {
@@ -47,3 +46,4 @@ li a:hover:not(.active) {
 .active {
   background-color: #0080ff;
 }
+

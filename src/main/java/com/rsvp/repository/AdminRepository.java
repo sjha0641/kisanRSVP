@@ -21,10 +21,10 @@ public class AdminRepository {
 	@PersistenceContext
 	private EntityManager entityManager;
 	
-	public Admin fetch(String email, String password) {
+	public Admin fetch(Admin admin) {
 		Query q= entityManager.createQuery("select a from Admin a where a.adminEmail=:em and a.adminPassword=:pwd");
-		q.setParameter("em", email);
-		q.setParameter("pwd", password);
+		q.setParameter("em", admin.getAdminEmail());
+		q.setParameter("pwd", admin.getAdminPassword());
 
 		return (Admin) q.getSingleResult();
 	}
@@ -62,18 +62,49 @@ public class AdminRepository {
 		return list;
 	}
 	
+	public List<BidDetails> fetchSoldBidding(){
+		Query q =entityManager.createQuery("select b from BidDetails b where b.bidStatus=:bs");
+		q.setParameter("bs", "sold");
+		List<BidDetails> list=q.getResultList();
+		return list;
+	}
+	
+	public List<BidDetails> fetchAllBiddingBasedOnCropId(int cropId){
+		Query q =entityManager.createQuery("select b from BidDetails b where b.bidStatus=:bs and b.cropBid.cropId=:cb and b.cropBid.cropSoldStatus=:cs");
+		q.setParameter("bs", "active");
+		q.setParameter("cb", cropId);
+		q.setParameter("cs", "no");
+		List<BidDetails> list=q.getResultList();
+		return list;
+	}
+	
 	
 	@Transactional
-	public void approveCrop(int CropId) {
-		Crop crop=entityManager.find(Crop.class,CropId);
+	public void approveCrop(int cropId) {
+		Crop crop=entityManager.find(Crop.class,cropId);
 		crop.setCropActiveStatus("yes");
 		entityManager.merge(crop);
 	}
 	
 	@Transactional
-	public void deleteFarmer(int farmerId) {
-		Farmer farmer=entityManager.find(Farmer.class,farmerId);
-		entityManager.remove(farmer);
+	public void approveBid(int cropId, int bidId) {
+		Crop crop=entityManager.find(Crop.class, cropId);
+		BidDetails bid = entityManager.find(BidDetails.class, bidId);
+		crop.setCropSoldStats("yes");
+		crop.setCropActiveStatus("no");
+		bid.setBidStatus("sold to you");
+		entityManager.merge(crop);
+		entityManager.merge(bid);
 	}
+	
+	@Transactional
+	public long pendingApproval() {
+		Query q =entityManager.createQuery("select count(*) from Crop c where c.cropActiveStatus=:cs");
+		q.setParameter("cs", "no");
+		long count = (Long) q.getSingleResult();
+		return count;
+	
+	}
+	
 	
 }
