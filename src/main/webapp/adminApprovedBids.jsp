@@ -23,9 +23,30 @@ width: 100%;
 	width: 50%;
 
 }
+.approvedBid {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 80%;
+}
+.approvedBid td, .approvedBid th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+.approvedBid tr:nth-child(even){background-color: #f2f2f2;}
 
+.approvedBid tr:hover {background-color: #ddd;}
+.approvedBid th {
+ font-family: "Times New Roman", Times, serif;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #0080ff;
+  color: white;
+}
 </style>
 </head>
+
+
 <body>
 	<h1>${sessionScope.loggedInAdmin.adminEmail }</h1>
 	<div >
@@ -41,7 +62,7 @@ width: 100%;
 
 	<div class="first">
 	<h4>_____List of Bids______</h4>
-		<table border="1">
+		<table class="approvedBid">
 			<tr>
 				<th>Bid Id</th>
 				<th>Bid Amount</th>
@@ -62,7 +83,7 @@ width: 100%;
 	</div>
 	<div class="second">
 	<h4>_____Bids based on Crops______</h4>
-		<table border="1">
+		<table class="approvedBid">
 		<form action="fetchAllBiddingBasedOnCropId.rsvp">
 		<label>Enter CropId</label>
 		<input type="number" name="cropId"/>

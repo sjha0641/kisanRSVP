@@ -7,7 +7,30 @@
 <meta charset="ISO-8859-1">
 <title>Approval</title>
 <link rel="stylesheet" href="adminLogin.css">
+<style>
+#notApprovedCrops {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 50%;
+}
+#notApprovedCrops td, #notApprovedCrops th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+#notApprovedCrops tr:nth-child(even){background-color: #f2f2f2;}
+
+#notApprovedCrops tr:hover {background-color: #ddd;}
+#notApprovedCrops th {
+ font-family: "Times New Roman", Times, serif;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #0080ff;
+  color: white;
+}
+</style>
 </head>
+
 <body>
 <h1>${sessionScope.loggedInAdmin.adminEmail }</h1>
 	<div>
@@ -20,7 +43,7 @@
 		</ul>
 	</div>
 	<h4>_____Crop Status______</h4>
-	<table border="1">
+	<table id="notApprovedCrops">
 		<tr>
 			<th>Type</th>
 			<th>Name</th>

@@ -7,7 +7,28 @@
 <meta charset="ISO-8859-1">
 <title>Bidder Details</title>
 <link rel="stylesheet" href="adminLogin.css">
+<style>
+#bidderDetails {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 50%;
+}
+#bidderDetails td, #bidderDetails th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+#bidderDetails tr:nth-child(even){background-color: #f2f2f2;}
 
+#bidderDetails tr:hover {background-color: #ddd;}
+#bidderDetails th {
+ font-family: "Times New Roman", Times, serif;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #0080ff;
+  color: white;
+}
+</style>
 </head>
 <body>
 <h1>${sessionScope.loggedInAdmin.adminEmail }</h1>
@@ -22,7 +43,7 @@
 	</div>
 	<div>
 		<h4>_____Bidder Details______</h4>
-	<table border="1">
+	<table id="bidderDetails">
 	<tr>
 			<th>Id</th>
 			<th>Name</th>

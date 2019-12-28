@@ -7,7 +7,28 @@
 <meta charset="ISO-8859-1">
 <title>Approved Crops</title>
 <link rel="stylesheet" href="adminLogin.css">
+<style>
+#approvedCrops {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 50%;
+}
+#approvedCrops td, #approvedCrops th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+#approvedCrops tr:nth-child(even){background-color: #f2f2f2;}
 
+#approvedCrops tr:hover {background-color: #ddd;}
+#approvedCrops th {
+ font-family: "Times New Roman", Times, serif;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #0080ff;
+  color: white;
+}
+</style>
 </head>
 <body >
 <h1>${sessionScope.loggedInAdmin.adminEmail }</h1>
@@ -21,7 +42,7 @@
 		</ul>
 	</div>
 	<h4>_____Crop Status______</h4>
-	<table border="1">
+	<table id="approvedCrops">
 		<tr>
 			<th>Type</th>
 			<th>Name</th>
