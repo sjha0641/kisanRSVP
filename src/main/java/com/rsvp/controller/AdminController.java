@@ -117,7 +117,7 @@ public class AdminController {
 	public String approveCrop(@RequestParam("cropId") int CropId, ModelMap model) {
 		try {
 			adminServices.approveCrop(CropId);
-			return "adminApproval.jsp";
+			return "redirect:fetchAllUnverifiedCrops.rsvp";
 		}
 		catch(Exception e) {
 			model.put("noCrops", "no Crops To Be Approved");
